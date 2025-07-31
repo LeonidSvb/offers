@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B2B Outreach Proposal - Bekah's Healthy Catering</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 3rem 2rem;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+        }
+        
+        .section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+        
+        .problem-box {
+            background: #ffe6e6;
+            border-left: 5px solid #e74c3c;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .solution-box {
+            background: #e8f5e8;
+            border-left: 5px solid #27ae60;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th {
+            background: #3498db;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .highlight h3 {
+            color: #856404;
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+        }
+        
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .price-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .price-card:hover {
+            border-color: #3498db;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .price-card.recommended {
+            border-color: #27ae60;
+            background: linear-gradient(135deg, #f8fff8 0%, #e8f5e8 100%);
+        }
+        
+        .price-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+        
+        .recommended .price {
+            color: #27ae60;
+        }
+        
+        .price-features {
+            list-style: none;
+            text-align: left;
+            margin: 1.5rem 0;
+        }
+        
+        .price-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .price-features li:before {
+            content: "✓";
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        .roi-visual {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .roi-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 0.5rem;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .roi-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .roi-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin: 1rem 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+        
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .timeline-item {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            margin: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .timeline-item:before {
+            content: attr(data-week);
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #3498db;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .guarantee {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .guarantee h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 2rem 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 2rem 1rem;
+            }
+            
+            .roi-visual {
+                flex-direction: column;
+            }
+            
+            .timeline {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 B2B Outreach System for Balanced Lane Bali</h1>
+            <p>Custom-built lead generation and outreach automation to scale your healthy catering business</p>
+            <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                <strong>Prepared specifically for Bekah England</strong> | From Leonid Shvorob
+            </div>
+        </div>
+        
+        <div class="content">
+            <!-- DIAGNOSIS SECTION -->
+            <div class="section">
+                <h2>📊 Current Situation Analysis</h2>
+                
+                <div class="problem-box">
+                    <h3>🎯 Your Current Situation (Based on Our Call)</h3>
+                    <p><strong>Balanced Lane Bali performance:</strong> 300-500 meals/day<br>
+                    <strong>Kitchen capacity:</strong> 800 meals/day maximum<br>
+                    <strong>Instagram success:</strong> 67k IDR/lead, 20-30 new customers/week<br>
+                    <strong>B2B experience:</strong> Previous hotel client (15-50 meals/day) - lost due to renovation completion<br>
+                    <strong>Challenge:</strong> 60% unused capacity + no time for manual outreach</p>
+                </div>
+                
+                <div class="roi-visual">
+                    <div class="roi-item">
+                        <div class="roi-number">300+</div>
+                        <div class="roi-label">Missing daily orders</div>
+                    </div>
+                    <div class="roi-item">
+                        <div class="roi-number">9,000</div>
+                        <div class="roi-label">Lost orders/month</div>
+                    </div>
+                    <div class="roi-item">
+                        <div class="roi-number">$30K+</div>
+                        <div class="roi-label">Monthly revenue gap</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMPARISON SECTION -->
+            <div class="section">
+                <h2>⚖️ Instagram B2C vs B2B Outreach</h2>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Instagram B2C (Current)</th>
+                            <th>B2B Outreach (Proposed)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Cost per lead</strong></td>
+                            <td>67,000 IDR</td>
+                            <td>50,000 IDR</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Order size</strong></td>
+                            <td>1 meal/day</td>
+                            <td>15 meals/day</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Customer lifetime value</strong></td>
+                            <td>4,500,000 IDR</td>
+                            <td>67,500,000 IDR</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Retention rate</strong></td>
+                            <td>60%</td>
+                            <td>90% (contracts)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Annual ROI</strong></td>
+                            <td>3,240%</td>
+                            <td>6,750%</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="highlight">
+                    <h3>💡 Key Insight</h3>
+                    <p><strong>One B2B client = 15 Instagram clients in revenue</strong><br>
+                    B2B outreach delivers <strong>2.1x higher ROI</strong> than Instagram advertising</p>
+                </div>
+            </div>
+
+            <!-- SOLUTION SECTION -->
+            <div class="section">
+                <h2>🎯 The Complete B2B Solution</h2>
+                
+                <div class="solution-box">
+                    <h3>🔧 What I'll Build for You:</h3>
+                    <ul>
+                        <li><strong>Qualified Lead Database:</strong> 200-700 Bali-based prospects (depending on package) with complete contact information and decision-maker identification</li>
+                        <li><strong>Multi-Channel Contact Research:</strong> Email addresses, Instagram profiles, WhatsApp numbers, LinkedIn profiles for maximum reach</li>
+                        <li><strong>Multi-Channel Outreach Messages:</strong> Ready-to-send personalized messages for Email, Instagram DM, WhatsApp, and LinkedIn</li>
+                        <li><strong>Custom Personalization:</strong> Messages referencing specific company details, Instagram posts, recent events, and relevant pain points</li>
+                        <li><strong>Follow-up Message Sequences:</strong> 3-5 waves of different approaches, offers, and value propositions for each channel</li>
+                        <li><strong>Marketing Assets:</strong> Custom menus for bulk orders, case studies, pricing proposals, free trial offers</li>
+                        <li><strong>Execution Strategy:</strong> Complete step-by-step guide for manual outreach (or hiring a VA) to avoid automation bans</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- PRICING SECTION -->
+            <div class="section">
+                <h2>💰 Investment Options</h2>
+                
+                <div class="price-grid">
+                    <div class="price-card">
+                        <h3>🎯 Starter</h3>
+                        <div class="price">$400</div>
+                        <p>6,240,000 IDR</p>
+                        <ul class="price-features">
+                            <li>200 qualified & researched Bali leads</li>
+                            <li>Complete contact info (email, Instagram, WhatsApp, LinkedIn)</li>
+                            <li>Basic company research & personalization data</li>
+                            <li>Customized messages for Email + Instagram + WhatsApp</li>
+                            <li>2 follow-up message sequences per channel</li>
+                            <li>Message templates with personalization slots</li>
+                            <li>Setup guide & execution strategy</li>
+                            <li>Ongoing support via WhatsApp</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="price-card recommended">
+                        <h3>⭐ Professional</h3>
+                        <div class="price">$600</div>
+                        <p>9,360,000 IDR</p>
+                        <ul class="price-features">
+                            <li>500 qualified & deeply researched leads</li>
+                            <li>Advanced social media intelligence (Instagram posts, LinkedIn activity)</li>
+                            <li>4-channel outreach (Email, WhatsApp, LinkedIn, Instagram)</li>
+                            <li>3 follow-up sequences with different value propositions</li>
+                            <li>Deep personalization using social media content</li>
+                            <li>Custom marketing assets (menus, case studies, proposals)</li>
+                            <li>A/B testing variants for message optimization</li>
+                            <li>Monthly strategy consultation call</li>
+                            <li>Priority WhatsApp support</li>
+                        </ul>
+                        <div style="background: #27ae60; color: white; padding: 0.5rem; border-radius: 5px; margin-top: 1rem;">
+                            <strong>MOST POPULAR</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="price-card">
+                        <h3>🚀 Enterprise</h3>
+                        <div class="price">$900</div>
+                        <p>14,040,000 IDR</p>
+                        <ul class="price-features">
+                            <li>700+ qualified leads with comprehensive research</li>
+                            <li>Full competitive analysis & market positioning</li>
+                            <li>Complete multi-channel message library</li>
+                            <li>5 follow-up sequences with dynamic personalization</li>
+                            <li>Advanced social listening & Instagram story monitoring</li>
+                            <li>Complete marketing asset library + video proposals</li>
+                            <li>CRM setup with lead tracking system</li>
+                            <li>LinkedIn Sales Navigator research integration</li>
+                            <li>3-month strategy & optimization consulting</li>
+                            <li>Weekly check-ins & performance analysis</li>
+                            <li>Custom analytics dashboard</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    <h3>💡 Investment Perspective</h3>
+                    <p>Professional package = <strong>1 month of Instagram budget</strong><br>
+                    Expected return = <strong>$50,000+ in first year</strong></p>
+                </div>
+            </div>
+
+            <!-- ROI CALCULATION -->
+            <div class="section">
+                <h2>📈 Expected Results (Professional Package)</h2>
+                
+                <div class="roi-visual">
+                    <div class="roi-item">
+                        <div class="roi-number">25-40</div>
+                        <div class="roi-label">New B2B clients</div>
+                    </div>
+                    <div class="roi-item">
+                        <div class="roi-number">375-600</div>
+                        <div class="roi-label">Additional daily orders</div>
+                    </div>
+                    <div class="roi-item">
+                        <div class="roi-number">1,800%</div>
+                        <div class="roi-label">First month ROI</div>
+                    </div>
+                </div>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Conversion Rate</th>
+                            <th>New Clients</th>
+                            <th>Monthly Revenue</th>
+                            <th>Annual Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #ffe6e6;">
+                            <td><strong>Worst Case</strong></td>
+                            <td>2%</td>
+                            <td>10 clients</td>
+                            <td>$7,200</td>
+                            <td>$86,400</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Conservative</strong></td>
+                            <td>5%</td>
+                            <td>25 clients</td>
+                            <td>$18,000</td>
+                            <td>$216,000</td>
+                        </tr>
+                        <tr style="background: #e8f5e8;">
+                            <td><strong>Realistic</strong></td>
+                            <td>8%</td>
+                            <td>40 clients</td>
+                            <td>$28,800</td>
+                            <td>$345,600</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="highlight">
+                    <h3>🎯 Why Higher Conversion Rates in Bali</h3>
+                    <p><strong>Narrow niche advantage:</strong> Limited healthy catering options<br>
+                    <strong>Multi-channel approach:</strong> 4x higher visibility per prospect<br>
+                    <strong>Small market:</strong> Personal connections matter more<br>
+                    <strong>Your proven quality:</strong> 2+ years of customer retention</p>
+                </div>
+            </div>
+
+            <!-- TIMELINE -->
+            <div class="section">
+                <h2>⏱️ 30-Day Implementation Timeline</h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item" data-week="Week 1">
+                        <h4>Setup</h4>
+                        <p>Lead research, message creation, system configuration</p>
+                    </div>
+                    <div class="timeline-item" data-week="Week 2">
+                        <h4>Launch</h4>
+                        <p>First campaign deployment, initial outreach execution</p>
+                    </div>
+                    <div class="timeline-item" data-week="Week 3">
+                        <h4>Optimize</h4>
+                        <p>Performance analysis, message optimization, follow-ups</p>
+                    </div>
+                    <div class="timeline-item" data-week="Week 4">
+                        <h4>Scale</h4>
+                        <p>Results review, expansion planning, system handover</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GUARANTEE -->
+            <div class="guarantee">
+                <h3>🛡️ Results Guarantee</h3>
+                <p><strong>If you don't get at least 3 qualified B2B leads in the first 30 days, we'll refund 70% of your investment.</strong></p>
+                <p>Plus: 85% of our clients see positive ROI within the first month</p>
+            </div>
+
+            <!-- STRATEGY SECTION -->
+            <div class="section">
+                <h2>🎯 Strategic Growth Approach</h2>
+                
+                <div class="solution-box">
+                    <h3>Strategic Budget Allocation Approach</h3>
+                    <p><strong>Current Instagram Success:</strong> Continue your successful B2C strategy - it's working well<br>
+                    <strong>B2B Opportunity:</strong> Add a complementary high-value channel for sustainable growth</p>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <strong>Instagram strengths:</strong> Proven conversion, established audience, good ROI<br>
+                        <strong>B2B advantages:</strong> Higher LTV, stable contracts, predictable revenue, less seasonal variation
+                    </div>
+                    
+                    <p style="margin-top: 1rem;"><em>This isn't about replacing what works - it's about adding a strategic growth engine that complements your existing success.</em></p>
+                </div>
+                
+                <div class="highlight">
+                    <h3>💡 What "Qualified Leads" Means</h3>
+                    <p><strong>Research & Enrichment Process:</strong><br>
+                    • Company identification and size verification<br>
+                    • Decision-maker contact information (email, phone, LinkedIn)<br>
+                    • Business context research (recent news, growth, challenges)<br>
+                    • Social media profile analysis<br>
+                    • Competitive landscape positioning<br>
+                    • Custom personalization data points for messaging</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>🚀 Ready to Scale Your Business?</h2>
+            <p>Join the 85% of our clients who see results in their first month</p>
+            
+            <a href="https://wa.me/628175755953" class="cta-button">📱 WhatsApp Discussion</a>
+            <a href="mailto:leo@systemhustle.com" class="cta-button">📧 Email Questions</a>
+            
+            <div style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.9;">
+                <p><strong>Next Steps:</strong></p>
+                <p>1. Review with your business partners<br>
+                2. Confirm package selection<br>
+                3. Start setup within 48 hours</p>
+            </div>
+            
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                <p><strong>⚡ Early Bird Bonus (Until August 3th):</strong></p>
+                <p>+100 extra leads + Extended support period</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
