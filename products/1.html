@@ -234,6 +234,20 @@
         </div>
     </section>
 
-    <script src="https://raw.githubusercontent.com/LeonidSvb/offers/main/scripts.js"></script>
+    <!-- 
+    DEBUG: Loading JavaScript from ../scripts.js
+    If you see "OfferSystem is not defined" error, 
+    the scripts.js file is not loading properly.
+    -->
+    <script src="https://cdn.jsdelivr.net/gh/LeonidSvb/offers@main/scripts.js"></script>
+    
+    <!-- Additional debug script -->
+    <script>
+        window.addEventListener('load', function() {
+            console.log('✅ Page loaded');
+            console.log('✅ OfferSystem available:', typeof window.OfferSystem !== 'undefined');
+            console.log('✅ Current scheme:', document.body.className);
+        });
+    </script>
 </body>
 </html>
