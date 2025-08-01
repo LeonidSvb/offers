@@ -401,4 +401,374 @@ class OfferSystem {
 
     validateForm(form) {
         let isValid = true;
-        const inputs = form.querySelectorAll('input[required], textarea[re
+        const inputs = form.querySelectorAll('input[required], textarea[required]');
+        
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                input.classList.add('error');
+                isValid = false;
+            } else {
+                input.classList.remove('error');
+            }
+        });
+        
+        return isValid;
+    }
+
+    showFormErrors(form) {
+        const errorInputs = form.querySelectorAll('.error');
+        if (errorInputs.length > 0) {
+            errorInputs[0].focus();
+            errorInputs[0].style.animation = 'shake 0.5s ease-in-out';
+        }
+    }
+
+    // =================== TYPING EFFECT ===================
+    setupTypingEffect() {
+        const titles = document.querySelectorAll('[data-typing]');
+        titles.forEach(title => {
+            const text = title.textContent;
+            const speed = parseInt(title.dataset.typing) || 50;
+            title.textContent = '';
+            title.style.borderRight = '2px solid currentColor';
+            
+            let i = 0;
+            const typeInterval = setInterval(() => {
+                title.textContent += text.charAt(i);
+                i++;
+                if (i >= text.length) {
+                    clearInterval(typeInterval);
+                    setTimeout(() => {
+                        title.style.borderRight = 'none';
+                    }, 1000);
+                }
+            }, speed);
+        });
+    }
+
+    // =================== UTILITY FUNCTIONS ===================
+    throttle(func, limit) {
+        let inThrottle;
+        return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    }
+
+    debounce(func, wait, immediate) {
+        let timeout;
+        return function() {
+            const context = this, args = arguments;
+            const later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            const callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    }
+
+    // =================== EVENT LISTENERS ===================
+    setupEventListeners() {
+        // Resize handler
+        window.addEventListener('resize', this.debounce(() => {
+            this.handleResize();
+        }, 250));
+
+        // Scroll handler for navbar
+        window.addEventListener('scroll', this.throttle(() => {
+            this.handleScroll();
+        }, 16));
+
+        // Focus/blur for better performance
+        window.addEventListener('focus', () => {
+            this.isLoaded && this.resumeAnimations();
+        });
+
+        window.addEventListener('blur', () => {
+            this.pauseAnimations();
+        });
+    }
+
+    handleResize() {
+        // Recalculate positions if needed
+        if (this.scrollObserver) {
+            this.scrollObserver.disconnect();
+            this.setupScrollAnimations();
+        }
+    }
+
+    handleScroll() {
+        const scrolled = window.pageYOffset;
+        
+        // Add class to body for scroll-based styling
+        if (scrolled > 100) {
+            document.body.classList.add('scrolled');
+        } else {
+            document.body.classList.remove('scrolled');
+        }
+    }
+
+    pauseAnimations() {
+        document.querySelectorAll('*').forEach(el => {
+            if (el.style.animation) {
+                el.style.animationPlayState = 'paused';
+            }
+        });
+    }
+
+    resumeAnimations() {
+        document.querySelectorAll('*').forEach(el => {
+            if (el.style.animation) {
+                el.style.animationPlayState = 'running';
+            }
+        });
+    }
+
+    // =================== PUBLIC API ===================
+    destroy() {
+        // Cleanup observers
+        this.observers.forEach(observer => observer.disconnect());
+        this.scrollObserver && this.scrollObserver.disconnect();
+        
+        // Remove event listeners
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleResize);
+        
+        this.isLoaded = false;
+    }
+}
+
+// =================== CSS ANIMATIONS (добавляем в head) ===================
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+    
+    .error {
+        border-color: #e74c3c !important;
+        box-shadow: 0 0 5px rgba(231, 76, 60, 0.5) !important;
+    }
+    
+    .scrolled .header {
+        transform: translateY(-10px);
+        transition: transform 0.3s ease;
+    }
+`;
+document.head.appendChild(style);
+
+// =================== AUTO-INITIALIZE ===================
+let offerSystem;
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        offerSystem = new OfferSystem();
+    });
+} else {
+    offerSystem = new OfferSystem();
+}
+
+// Make it globally accessible for debugging
+window.OfferSystem = OfferSystem;
+window.offerSystem = offerSystem;quired]');
+        
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                input.classList.add('error');
+                isValid = false;
+            } else {
+                input.classList.remove('error');
+            }
+        });
+        
+        return isValid;
+    }
+
+    showFormErrors(form) {
+        const errorInputs = form.querySelectorAll('.error');
+        if (errorInputs.length > 0) {
+            errorInputs[0].focus();
+            errorInputs[0].style.animation = 'shake 0.5s ease-in-out';
+        }
+    }
+
+    // =================== TYPING EFFECT ===================
+    setupTypingEffect() {
+        const titles = document.querySelectorAll('[data-typing]');
+        titles.forEach(title => {
+            const text = title.textContent;
+            const speed = parseInt(title.dataset.typing) || 50;
+            title.textContent = '';
+            title.style.borderRight = '2px solid currentColor';
+            
+            let i = 0;
+            const typeInterval = setInterval(() => {
+                title.textContent += text.charAt(i);
+                i++;
+                if (i >= text.length) {
+                    clearInterval(typeInterval);
+                    setTimeout(() => {
+                        title.style.borderRight = 'none';
+                    }, 1000);
+                }
+            }, speed);
+        });
+    }
+
+    // =================== UTILITY FUNCTIONS ===================
+    throttle(func, limit) {
+        let inThrottle;
+        return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    }
+
+    debounce(func, wait, immediate) {
+        let timeout;
+        return function() {
+            const context = this, args = arguments;
+            const later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            const callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    }
+
+    // =================== EVENT LISTENERS ===================
+    setupEventListeners() {
+        // Resize handler
+        window.addEventListener('resize', this.debounce(() => {
+            this.handleResize();
+        }, 250));
+
+        // Scroll handler for navbar
+        window.addEventListener('scroll', this.throttle(() => {
+            this.handleScroll();
+        }, 16));
+
+        // Focus/blur for better performance
+        window.addEventListener('focus', () => {
+            this.isLoaded && this.resumeAnimations();
+        });
+
+        window.addEventListener('blur', () => {
+            this.pauseAnimations();
+        });
+    }
+
+    handleResize() {
+        // Recalculate positions if needed
+        if (this.scrollObserver) {
+            this.scrollObserver.disconnect();
+            this.setupScrollAnimations();
+        }
+    }
+
+    handleScroll() {
+        const scrolled = window.pageYOffset;
+        
+        // Add class to body for scroll-based styling
+        if (scrolled > 100) {
+            document.body.classList.add('scrolled');
+        } else {
+            document.body.classList.remove('scrolled');
+        }
+    }
+
+    pauseAnimations() {
+        document.querySelectorAll('*').forEach(el => {
+            if (el.style.animation) {
+                el.style.animationPlayState = 'paused';
+            }
+        });
+    }
+
+    resumeAnimations() {
+        document.querySelectorAll('*').forEach(el => {
+            if (el.style.animation) {
+                el.style.animationPlayState = 'running';
+            }
+        });
+    }
+
+    // =================== PUBLIC API ===================
+    destroy() {
+        // Cleanup observers
+        this.observers.forEach(observer => observer.disconnect());
+        this.scrollObserver && this.scrollObserver.disconnect();
+        
+        // Remove event listeners
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleResize);
+        
+        this.isLoaded = false;
+    }
+}
+
+// =================== CSS ANIMATIONS (добавляем в head) ===================
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+    
+    .error {
+        border-color: #e74c3c !important;
+        box-shadow: 0 0 5px rgba(231, 76, 60, 0.5) !important;
+    }
+    
+    .scrolled .header {
+        transform: translateY(-10px);
+        transition: transform 0.3s ease;
+    }
+`;
+document.head.appendChild(style);
+
+// =================== AUTO-INITIALIZE ===================
+let offerSystem;
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        offerSystem = new OfferSystem();
+    });
+} else {
+    offerSystem = new OfferSystem();
+}
+
+// Make it globally accessible for debugging
+window.OfferSystem = OfferSystem;
+window.offerSystem = offerSystem;
