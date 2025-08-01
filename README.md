@@ -7,6 +7,20 @@ Link files in HTML:
 <script src="scripts.js"></script>
 ```
 
+## JavaScript Features (Automatic)
+- **Loading animation** - Shows on page load, hides after 1.2s
+- **Scroll animations** - Cards animate in when visible
+- **Hover effects** - Enhanced interactions on cards/buttons
+- **Counter animations** - ROI metrics count up when visible
+- **Magnetic buttons** - CTA buttons follow mouse movement
+- **Parallax effects** - Subtle movement on scroll
+- **Form validation** - Automatic error handling
+
+### Optional JS Features
+Add to elements for extra effects:
+- `data-typing="50"` on titles for typewriter effect
+- `.error` class auto-applies to invalid form fields
+
 ## Color Schemes
 Add ONE class to `<body>`:
 - `scheme-purple` - Purple-Blue (health/PCOS)
