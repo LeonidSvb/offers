@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YouTube Trend Detector</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="scripts.js" defer></script>
+</head>
+<body class="scheme-blue">
+  
+  <!-- Header -->
+  <section class="header">
+    <div class="container">
+      <h1 class="hero-title" data-typing="50">YouTube Trend Detector</h1>
+      <p class="hero-subtitle">Know the trends before your competitors do</p>
+      <div class="time-saved">⏰ Competitive edge while they sleep</div>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section class="section bg-white">
+    <div class="container">
+      <h2 class="section-title">🎯 Stop guessing — start knowing</h2>
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="card-icon">🌅</div>
+          <h3 class="card-title">Wasted mornings</h3>
+          <p class="card-text">15+ hours weekly lost manually checking channels</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎯</div>
+          <h3 class="card-title">Missed trends</h3>
+          <p class="card-text">By the time you react, the hype is gone</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📉</div>
+          <h3 class="card-title">Blind decisions</h3>
+          <p class="card-text">No data = content that flops</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solution Steps -->
+  <section class="section bg-primary">
+    <div class="container">
+      <h2 class="section-title">🚀 How your competitive advantage works</h2>
+      <div class="grid grid-4">
+        <div class="card card-glass">
+          <div class="step-number">1</div>
+          <h3 class="step-title">Daily Scan</h3>
+          <p class="step-text">System collects overnight data from watchlist channels</p>
+        </div>
+        <div class="card card-glass">
+          <div class="step-number">2</div>
+          <h3 class="step-title">Smart Filter</h3>
+          <p class="step-text">Only viral-worthy content is selected</p>
+        </div>
+        <div class="card card-glass">
+          <div class="step-number">3</div>
+          <h3 class="step-title">Auto Sheet</h3>
+          <p class="step-text">All stats organized into a Google Sheet</p>
+        </div>
+        <div class="card card-glass">
+          <div class="step-number">4</div>
+          <h3 class="step-title">Instant Insight</h3>
+          <p class="step-text">You open the doc and act with clarity</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="section bg-light">
+    <div class="container">
+      <h2 class="section-title">📊 What power this data gives you</h2>
+      <div class="grid grid-3">
+        <div class="card card-primary">
+          <div class="card-icon">💡</div>
+          <h3 class="card-title">Proven content</h3>
+          <p class="card-text">Learn from real videos that got millions of views</p>
+        </div>
+        <div class="card card-primary">
+          <div class="card-icon">📈</div>
+          <h3 class="card-title">Data-driven actions</h3>
+          <p class="card-text">No more "gut feeling" — only smart decisions</p>
+        </div>
+        <div class="card card-primary">
+          <div class="card-icon">🎯</div>
+          <h3 class="card-title">Trend spotting</h3>
+          <p class="card-text">React fast before trends peak</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Before vs After -->
+  <section class="section bg-white">
+    <div class="container">
+      <h2 class="section-title">Before vs After</h2>
+      <div class="grid grid-2">
+        <div class="card roi-card roi-before">
+          <h3 class="card-title">WITHOUT Trend Detector</h3>
+          <div class="roi-metric">15h/week lost</div>
+          <p>Manual checks, missed insights, slower growth</p>
+        </div>
+        <div class="card roi-card roi-after">
+          <h3 class="card-title">WITH Trend Detector</h3>
+          <div class="roi-metric">+5x ROI</div>
+          <p>All trends and decisions ready at 6:00 AM</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta-section bg-primary">
+    <div class="container">
+      <h2 class="cta-title">📈 Turn data into money</h2>
+      <p class="cta-subtitle">Get the unfair advantage now</p>
+      <a href="https://example.com/book-demo" class="cta-button">
+        <span>Book Demo</span>
+      </a>
+      <div class="mt-4">
+        <p class="opacity-80">✅ Daily updated sheet<br>✅ Competitor intelligence<br>✅ Trend-first content strategy</p>
+      </div>
+      <p class="mt-5 text-sm opacity-70"><strong>Leonid</strong> - Automation Strategist</p>
+    </div>
+  </section>
+
+</body>
+</html>
