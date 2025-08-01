@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouTube Trend Detector - Know Trends Before Your Competitors</title>
     <meta name="description" content="Stop guessing, start knowing. Get daily competitor insights and trending content data delivered to your Google Sheets every morning at 6 AM.">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://raw.githubusercontent.com/LeonidSvb/offers/main/style.css">
 </head>
 <body class="scheme-blue">
 
@@ -234,6 +234,20 @@
         </div>
     </section>
 
-    <script src="scripts.js"></script>
+    <!-- 
+    DEBUG: Loading JavaScript from ../scripts.js
+    If you see "OfferSystem is not defined" error, 
+    the scripts.js file is not loading properly.
+    -->
+    <script src="../scripts.js"></script>
+    
+    <!-- Additional debug script -->
+    <script>
+        window.addEventListener('load', function() {
+            console.log('✅ Page loaded');
+            console.log('✅ OfferSystem available:', typeof window.OfferSystem !== 'undefined');
+            console.log('✅ Current scheme:', document.body.className);
+        });
+    </script>
 </body>
 </html>
