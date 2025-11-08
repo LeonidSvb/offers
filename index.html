@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Voice Agent</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #14B8A6 0%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p {
+      font-size: 1.25rem;
+      color: #a0a0a0;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .cta {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background-color: #14B8A6;
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    .cta:hover {
+      background-color: #0d9488;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(20, 184, 166, 0.3);
+    }
+
+    .footer {
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    /* Make sure widget is visible */
+    vapi-widget {
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AI Voice Agent</h1>
+    <p>
+      Talk to our AI assistant using voice or text.
+      Click the button in the bottom-right corner to start a conversation.
+    </p>
+    <div class="footer">
+      Powered by Vapi AI
+    </div>
+  </div>
+
+  <!-- Vapi Widget -->
+  <vapi-widget
+    public-key="178df3f2-29a2-4035-8b4f-5dfc7867c9e5"
+    assistant-id="685d21a5-3280-4712-81d3-13a79730c22e"
+    mode="voice"
+    theme="dark"
+    base-bg-color="#000000"
+    accent-color="#14B8A6"
+    cta-button-color="#000000"
+    cta-button-text-color="#ffffff"
+    border-radius="large"
+    size="full"
+    position="bottom-right"
+    title="TALK WITH AI"
+    start-button-text="Start"
+    end-button-text="End Call"
+    chat-first-message="Hey, How can I help you today?"
+    chat-placeholder="Type your message..."
+    voice-show-transcript="true"
+    consent-required="true"
+    consent-title="Terms and conditions"
+    consent-content="By clicking 'Agree,' and each time I interact with this AI agent, I consent to the recording, storage, and sharing of my communications with third-party service providers, and as otherwise described in our Terms of Service."
+    consent-storage-key="vapi_widget_consent"
+  ></vapi-widget>
+
+  <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
+</body>
+</html>
