@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Shopping Assistant</title>
+  <title>AI Voice Agent</title>
   <style>
     * {
       margin: 0;
@@ -13,392 +13,80 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background-color: #000000;
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
       color: #ffffff;
-      line-height: 1.6;
-    }
-
-    /* Header */
-    header {
-      background-color: #0a0a0a;
-      border-bottom: 1px solid #1a1a1a;
-      padding: 1.5rem 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .header-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 2rem;
+      min-height: 100vh;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #14B8A6;
-      text-decoration: none;
-      letter-spacing: -0.5px;
-    }
-
-    nav {
-      display: flex;
-      gap: 2rem;
-    }
-
-    nav a {
-      color: #a0a0a0;
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: color 0.3s;
-    }
-
-    nav a:hover {
-      color: #ffffff;
-    }
-
-    .header-actions {
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-    }
-
-    .cart-icon {
-      background: none;
-      border: none;
-      color: #a0a0a0;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: color 0.3s;
-    }
-
-    .cart-icon:hover {
-      color: #ffffff;
-    }
-
-    /* Hero Section */
-    .hero {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 6rem 2rem;
+    .container {
+      max-width: 800px;
       text-align: center;
     }
 
-    .hero h1 {
-      font-size: 4rem;
+    h1 {
+      font-size: 3rem;
       font-weight: 700;
-      margin-bottom: 1.5rem;
-      line-height: 1.1;
+      margin-bottom: 1rem;
       background: linear-gradient(135deg, #14B8A6 0%, #06b6d4 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    .hero p {
+    p {
       font-size: 1.25rem;
       color: #a0a0a0;
       margin-bottom: 2rem;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      line-height: 1.6;
     }
 
-    .cta-button {
+    .cta {
       display: inline-block;
-      padding: 1rem 2.5rem;
+      padding: 1rem 2rem;
       background-color: #14B8A6;
       color: #ffffff;
       font-size: 1.1rem;
       font-weight: 600;
-      border-radius: 8px;
+      border-radius: 12px;
       text-decoration: none;
       transition: all 0.3s ease;
-      border: none;
-      cursor: pointer;
+      margin-top: 1rem;
     }
 
-    .cta-button:hover {
+    .cta:hover {
       background-color: #0d9488;
       transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(20, 184, 166, 0.4);
+      box-shadow: 0 10px 25px rgba(20, 184, 166, 0.3);
     }
 
-    /* Features Section */
-    .features {
-      background-color: #0a0a0a;
-      padding: 5rem 2rem;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
-    }
-
-    .features-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 3rem;
-    }
-
-    .feature {
-      text-align: center;
-    }
-
-    .feature-icon {
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, #14B8A6 0%, #06b6d4 100%);
-      border-radius: 12px;
-      margin: 0 auto 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-    }
-
-    .feature h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: #ffffff;
-    }
-
-    .feature p {
-      color: #a0a0a0;
-      font-size: 1rem;
-    }
-
-    /* Products Preview */
-    .products {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 5rem 2rem;
-    }
-
-    .products h2 {
-      font-size: 2.5rem;
-      text-align: center;
-      margin-bottom: 3rem;
-      color: #ffffff;
-    }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-    }
-
-    .product-card {
-      background-color: #0a0a0a;
-      border: 1px solid #1a1a1a;
-      border-radius: 12px;
-      overflow: hidden;
-      transition: all 0.3s;
-      cursor: pointer;
-    }
-
-    .product-card:hover {
-      border-color: #14B8A6;
-      transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(20, 184, 166, 0.2);
-    }
-
-    .product-image {
-      width: 100%;
-      height: 300px;
-      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      color: #333;
-    }
-
-    .product-info {
-      padding: 1.5rem;
-    }
-
-    .product-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #ffffff;
-    }
-
-    .product-price {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #14B8A6;
-      margin-bottom: 1rem;
-    }
-
-    .product-button {
-      width: 100%;
-      padding: 0.8rem;
-      background-color: #1a1a1a;
-      color: #ffffff;
-      border: 1px solid #333;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .product-button:hover {
-      background-color: #14B8A6;
-      border-color: #14B8A6;
-    }
-
-    /* Footer */
-    footer {
-      background-color: #0a0a0a;
-      border-top: 1px solid #1a1a1a;
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      color: #a0a0a0;
-      text-decoration: none;
+    .footer {
+      margin-top: 4rem;
       font-size: 0.9rem;
-      transition: color 0.3s;
-    }
-
-    .footer-links a:hover {
-      color: #14B8A6;
-    }
-
-    .footer-text {
       color: #666;
-      font-size: 0.9rem;
     }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-
-      nav {
-        display: none;
-      }
-
-      .products-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Widget visibility */
+    /* Make sure widget is visible */
     vapi-widget {
       z-index: 9999;
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="header-container">
-      <a href="#" class="logo">AI STORE</a>
-      <nav>
-        <a href="#catalog">Catalog</a>
-        <a href="#features">Features</a>
-        <a href="#support">Support</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <div class="header-actions">
-        <button class="cart-icon">🛒</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Shop with AI Assistant</h1>
+  <div class="container">
+    <h1>AI Voice Agent</h1>
     <p>
-      Get personalized recommendations, instant answers, and seamless shopping experience.
-      Click the button below to talk with our AI assistant.
+      Talk to our AI assistant using voice or text.
+      Click the button in the bottom-right corner to start a conversation.
     </p>
-    <button class="cta-button" onclick="alert('Click the AI button in the bottom-right corner to start!')">
-      Talk to AI Now
-    </button>
-  </section>
-
-  <!-- Features -->
-  <section class="features" id="features">
-    <div class="features-container">
-      <div class="feature">
-        <div class="feature-icon">🎯</div>
-        <h3>Smart Recommendations</h3>
-        <p>AI-powered product suggestions tailored to your preferences and needs.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">💬</div>
-        <h3>24/7 Support</h3>
-        <p>Get instant answers to your questions anytime, anywhere via voice or chat.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">⚡</div>
-        <h3>Fast Checkout</h3>
-        <p>Complete your purchase quickly with our streamlined AI-assisted checkout.</p>
-      </div>
+    <div class="footer">
+      Powered by Vapi AI
     </div>
-  </section>
-
-  <!-- Products Preview -->
-  <section class="products" id="catalog">
-    <h2>Featured Products</h2>
-    <div class="products-grid">
-      <div class="product-card">
-        <div class="product-image">🎧</div>
-        <div class="product-info">
-          <div class="product-title">Premium Wireless Headphones</div>
-          <div class="product-price">$99.98</div>
-          <button class="product-button">View Details</button>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-image">⌚</div>
-        <div class="product-info">
-          <div class="product-title">Smart Watch Pro</div>
-          <div class="product-price">$199.98</div>
-          <button class="product-button">View Details</button>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-image">📱</div>
-        <div class="product-info">
-          <div class="product-title">Smartphone Ultra</div>
-          <div class="product-price">$799.98</div>
-          <button class="product-button">View Details</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer id="contact">
-    <div class="footer-links">
-      <a href="#refund">Refund Policy</a>
-      <a href="#privacy">Privacy Policy</a>
-      <a href="#terms">Terms of Service</a>
-      <a href="#shipping">Shipping Policy</a>
-    </div>
-    <div class="footer-text">
-      &copy; 2025 AI Store. All rights reserved.
-    </div>
-  </footer>
+  </div>
 
   <!-- Vapi Widget -->
   <vapi-widget
