@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silverlight AI Platform - Technical Proposal & Analysis</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background: var(--gray-50);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        .executive-summary {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary);
+        }
+
+        .executive-summary h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .highlight-box {
+            background: var(--gray-100);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 3px solid var(--warning);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-600);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            color: var(--primary);
+            background: var(--gray-50);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .collapsible {
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .collapsible-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            transition: background 0.3s;
+            border-left: 4px solid var(--primary);
+        }
+
+        .collapsible-header:hover {
+            background: var(--gray-50);
+        }
+
+        .collapsible-header h3 {
+            font-size: 1.2rem;
+            color: var(--gray-800);
+        }
+
+        .collapsible-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .collapsible.active .collapsible-icon {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 20px;
+        }
+
+        .collapsible.active .collapsible-content {
+            max-height: 2000px;
+            padding: 20px;
+        }
+
+        .quote {
+            background: var(--gray-50);
+            border-left: 4px solid var(--primary);
+            padding: 15px 20px;
+            margin: 15px 0;
+            font-style: italic;
+            color: var(--gray-700);
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 2rem;
+            color: var(--primary);
+            opacity: 0.3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        th {
+            background: var(--gray-100);
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        tr:hover {
+            background: var(--gray-50);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .risk-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid var(--danger);
+        }
+
+        .risk-item h4 {
+            color: var(--danger);
+            margin-bottom: 8px;
+        }
+
+        .calculator {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 30px 0;
+        }
+
+        .calculator h3 {
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .checkbox-group {
+            margin: 15px 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            background: var(--gray-50);
+            border-radius: 6px;
+        }
+
+        .checkbox-item input {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .checkbox-item label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .checkbox-item .hours {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .total-estimate {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .total-estimate h4 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .total-estimate .amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .comparison-card h3 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison-card li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .comparison-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .comparison-card.excluded li::before {
+            content: '✗';
+            color: var(--danger);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 40px;
+            padding-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gray-300);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .timeline-item h4 {
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+
+        .cta {
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px;
+            margin-top: 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .cta h2 {
+            margin-bottom: 20px;
+            color: var(--gray-800);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Silverlight AI Platform</h1>
+        <p>Technical Analysis & Implementation Proposal</p>
+    </header>
+
+    <div class="container">
+        <!-- Executive Summary -->
+        <section class="executive-summary">
+            <h2>Executive Summary</h2>
+            <p>This document provides a comprehensive technical analysis of the proposed Silverlight AI Platform based on the two specification documents provided:</p>
+            <ul style="margin: 15px 0 15px 30px;">
+                <li><strong>AI Brain for Client Communications</strong> - Automated multi-channel client engagement system</li>
+                <li><strong>Project Intake, Expert Submission & Auto-booking</strong> - Expert network management and scheduling automation</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Key Finding:</strong> This is not a single project, but rather a comprehensive AI-powered platform for automating an expert consulting network. The full implementation as specified would require <strong>1,260-1,740 hours</strong> of development time over <strong>6-8 months</strong>.
+            </div>
+
+            <p style="margin-top: 20px;">This proposal outlines:</p>
+            <ul style="margin: 10px 0 0 30px;">
+                <li>Detailed breakdown of technical requirements</li>
+                <li>Realistic time and cost estimates</li>
+                <li>Critical risks and challenges</li>
+                <li>Recommended MVP approach (2-3 months)</li>
+                <li>Interactive cost calculator</li>
+            </ul>
+        </section>
+
+        <!-- Project Overview Tabs -->
+        <div style="margin-bottom: 40px;">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('system1')">System 1: Client Communications</button>
+                <button class="tab" onclick="switchTab('system2')">System 2: Expert Management</button>
+            </div>
+
+            <div id="system1" class="tab-content active">
+                <h3>AI Brain - Client Communication & Retention System</h3>
+                <p>An intelligent multi-channel communication system designed to maintain constant engagement with all clients and contacts.</p>
+
+                <div class="quote">
+                    Build a communication system that replies instantly and personally to every client or contact who writes to us on email, WhatsApp, or LinkedIn. Keeps full awareness of every previous interaction, across all channels.
+                </div>
+
+                <h4 style="margin-top: 25px; margin-bottom: 15px;">Core Components:</h4>
+                <div class="collapsible">
+                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <h3>1. LinkedIn & Company Extraction</h3>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content">
+                        <div class="quote">
+                            When a form is submitted with a company LinkedIn URL, the system reviews the company's page and gathers contacts who hold relevant job titles.
+                        </div>
+                        <p><strong>Technical Requirements:</strong></p>
+                        <ul style="margin-left: 30px;">
+                            <li>LinkedIn profile enrichment (phone/email extraction)</li>
+                            <li>Company-wide contact discovery</li>
+                            <li>Automated email and WhatsApp outreach sequences</li>
+                            <li>Quarterly re-engagement campaigns</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><span class="badge badge-danger">CRITICAL RISK</span> LinkedIn does not provide API access for automated scraping or messaging. Web scraping violates LinkedIn Terms of Service and can result in account bans and legal action.</p>
+                    </div>
+                </div>
+
+                <div class="collapsible">
+                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <h3>2. Scheduling & Rescheduling Automation</h3>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content">
+                        <div class="quote">
+                            Make it effortless to arrange, confirm, or reschedule introductory or follow-up calls with clients. The system detects a client's timezone, speaks naturally on both email and WhatsApp, creates and edits calendar invites automatically.
+                        </div>
+                        <p><strong>Features:</strong></p>
+                        <ul style="margin-left: 30px;">
+                            <li>Automatic timezone detection and conversion</li>
+                            <li>Multi-channel scheduling (email + WhatsApp)</li>
+                            <li>Calendar integration (Google Calendar, Office 365)</li>
+                            <li>Intelligent rescheduling handling</li>
+                            <li>No-show follow-up automation</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>Estimated Time:</strong> <span class="badge badge-info">60-80 hours</span></p>
+                    </div>
+                </div>
+
+                <div class="collapsible">
+                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <h3>3. Form-Driven Follow-Ups</h3>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content">
+                        <div class="quote">
+                            Ensure every client who has received or submitted a form (for access, onboarding, or setup) is reminded until it's completed. All reminders go by email and WhatsApp in a friendly cadence.
+                        </div>
+                        <p><strong>Coverage:</strong></p>
+                        <ul style="margin-left: 30px;">
+                            <li>21 different form types tracked</li>
+                            <li>Automated reminder sequences (email → WhatsApp → follow-ups)</li>
+                            <li>Deferral memory and automatic restart</li>
+                            <li>Completion tracking and notifications</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="collapsible">
+                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <h3>4. AI Intelligent Follow-Up System</h3>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content">
+                        <div class="quote">
+                            Every contact we've interacted with must stay in regular, meaningful communication through email, WhatsApp, or LinkedIn. Every message feels personal, relevant, and connected to their history with us.
+                        </div>
+                        <p><strong>AI Capabilities:</strong></p>
+                        <ul style="margin-left: 30px;">
+                            <li>Context-aware message generation (reads full email/WhatsApp history)</li>
+                            <li>Adaptive follow-up timing based on response patterns</li>
+                            <li>Sentiment analysis and churn detection</li>
+                            <li>30-day engagement guarantee for all contacts</li>
+                            <li>Automatic prioritization and daily call lists</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>Estimated Time:</strong> <span class="badge badge-info">120-160 hours</span></p>
+                    </div>
+                </div>
+
+                <div class="collapsible">
+                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <h3>5. LinkedIn Monitoring & Engagement</h3>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content">
+                        <div class="quote">
+                            Stay present in every client's professional life by noticing their activity on LinkedIn. The AI Brain congratulates, comments, and reconnects whenever a client gets promoted, changes company, or publishes a post.
+                        </div>
+                        <p><span class="badge badge-danger">LEGAL RISK</span> Automated LinkedIn monitoring and messaging is prohibited by LinkedIn's Terms of Service.</p>
+                        <p style="margin-top: 10px;"><strong>Alternative Approach:</strong> Manual LinkedIn monitoring with AI-assisted message drafting (semi-automated workflow)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="system2" class="tab-content">
+                <h3>Project Intake, Expert Sourcing & Auto-booking System</h3>
+                <p>End-to-end automation for managing expert consulting projects, from initial client request to completed calls and payments.</p>
+
+                <div class="quote">
+                    The Silverlight Expert Autobooking & Scheduling System automates the full life cycle: Project Intake → Expert Sourcing → Project Updates → Invitations & Chasing → Call Scheduling → Pre-/During-/Post-Call → Payment → Recordkeeping → AI followups.
+                </div>
+
+                <h4 style="margin-top: 25px; margin-bottom: 15px;">Core Workflow:</h4>
+
+                <div class="collapsible">
+                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <h3>1. Project Intake</h3>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content">
+                        <div class="quote">
+                            Client emails initiate the process. The bot checks if there is a live project for this person, analyzes the email to see if it is a request for experts, and ensures all required briefing elements are gathered.
+                        </div>
+                        <p><strong>Requirements Extracted:</strong></p>
+                        <ul style="margin-left: 30px;">
+                            <li>Relevant companies/experience</li>
+                            <li>Current vs former employees</li>
+                            <li>Geography/countries</li>
+                            <li>Key themes and job titles</li>
+                            <li>Screening questions</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>AI Processing:</strong> NLP to parse unstructured client emails and extract structured project requirements</p>
+                        <p><strong>Estimated Time:</strong> <span class="badge badge-info">30-40 hours</span></p>
+                    </div>
+                </div>
+
+                <div class="collapsible">
+                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <h3>2. Expert Sourcing & Matching</h3>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content">
+                        <div class="quote">
+                            As soon as the project is created, the system searches our existing network for relevant experts. If five or more relevant profiles are found, immediately email these profiles to the client.
+                        </div>
+                        <p><strong>AI Matching Algorithm:</strong></p>
+                        <ul style="margin-left: 30px;">
+                            <li>Semantic search across expert database</li>
+                            <li>Compatibility scoring (past roles vs project needs)</li>
+                            <li>Industry side categorization (producers/suppliers/clients)</li>
+                            <li>Automatic expert ranking and explanation</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>Estimated Time:</strong> <span class="badge badge-info">40-60 hours</span></p>
+                    </div>
+                </div>
+
+                <div class="collapsible">
+                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <h3>3. Expert Invitation & Response Handling</h3>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content">
+                        <div class="quote">
+                            Contact expert(s) via email, WhatsApp, and AI caller. Confirm availability and answers to screening questions. Once all info is complete, provide to the client and initiate call scheduling.
+                        </div>
+                        <p><strong>Multi-Channel Chase Sequence:</strong></p>
+                        <ul style="margin-left: 30px;">
+                            <li>Email → 1 hour → WhatsApp → 1 hour → AI call</li>
+                            <li>3 full chase cycles over 7 days</li>
+                            <li>Automated screening question collection</li>
+                            <li>Timezone-aware quiet hours (no messages 9pm-7am)</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><span class="badge badge-warning">COST CONSIDERATION</span> AI voice calls cost approximately $0.10-0.50 per minute</p>
+                    </div>
+                </div>
+
+                <div class="collapsible">
+                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <h3>4. Call Scheduling Automation</h3>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content">
+                        <div class="quote">
+                            Once expert responses and client approvals are received, the booking sequence begins automatically. The system must handle every possible combination of known and unknown availabilities.
+                        </div>
+                        <p><strong>Features:</strong></p>
+                        <ul style="margin-left: 30px;">
+                            <li>Automatic timezone conversion and reconciliation</li>
+                            <li>Zoom meeting creation with unique links</li>
+                            <li>Office 365 calendar invites for both parties</li>
+                            <li>24h and 1h automated reminders (email + WhatsApp)</li>
+                            <li>Rescheduling and cancellation handling</li>
+                            <li>Multi-expert booking coordination</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>Estimated Time:</strong> <span class="badge badge-info">80-120 hours</span></p>
+                    </div>
+                </div>
+
+                <div class="collapsible">
+                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <h3>5. AI Co-Pilot (During Call)</h3>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content">
+                        <div class="quote">
+                            If both sides consent, the AI Co-Pilot silently joins: Live-transcribes the discussion, generates structured notes, suggests real-time prompts to the client, tags themes for analytics and indexing.
+                        </div>
+                        <p><strong>Capabilities:</strong></p>
+                        <ul style="margin-left: 30px;">
+                            <li>Real-time speech-to-text transcription (Whisper/Deepgram)</li>
+                            <li>Live prompt suggestions to client</li>
+                            <li>Post-call summary generation within 10 minutes</li>
+                            <li>Theme tagging and knowledge graph integration</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>Estimated Time:</strong> <span class="badge badge-info">80-100 hours</span></p>
+                    </div>
+                </div>
+
+                <div class="collapsible">
+                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <h3>6. Payment Automation</h3>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content">
+                        <div class="quote">
+                            After a call is completed, Zoom duration data is collected. Client receives email to confirm actual duration. If expert agrees, automatic payment draft in Veem for manual approval.
+                        </div>
+                        <p><strong>Workflow:</strong></p>
+                        <ul style="margin-left: 30px;">
+                            <li>Automatic fee calculation based on client domain + expert rate</li>
+                            <li>Duration confirmation from both parties</li>
+                            <li>Veem API integration for payment processing</li>
+                            <li>Revenue tracking and audit logging</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>Estimated Time:</strong> <span class="badge badge-info">60-80 hours</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Complexity & Integrations -->
+        <section style="background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <h2 style="color: var(--primary); margin-bottom: 20px;">Technical Complexity & Integration Analysis</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Integration</th>
+                        <th>Complexity</th>
+                        <th>Hours</th>
+                        <th>Operational Cost</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Email (SendGrid/SMTP)</strong></td>
+                        <td><span class="badge badge-success">Simple</span></td>
+                        <td>40-60h</td>
+                        <td>~$10/month</td>
+                        <td>Templates, tracking, webhooks</td>
+                    </tr>
+                    <tr>
+                        <td><strong>WhatsApp Business API</strong></td>
+                        <td><span class="badge badge-warning">High</span></td>
+                        <td>80-120h</td>
+                        <td>$500-1000/month</td>
+                        <td>Requires business verification (2-4 weeks)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LinkedIn API</strong></td>
+                        <td><span class="badge badge-danger">IMPOSSIBLE</span></td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td>API does not support automation. Web scraping = TOS violation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Google Calendar API</strong></td>
+                        <td><span class="badge badge-success">Medium</span></td>
+                        <td>30-40h</td>
+                        <td>Free</td>
+                        <td>OAuth, timezone handling</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Office 365 Calendar</strong></td>
+                        <td><span class="badge badge-success">Medium</span></td>
+                        <td>30-40h</td>
+                        <td>Free</td>
+                        <td>Microsoft Graph API</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Zoom API</strong></td>
+                        <td><span class="badge badge-success">Simple</span></td>
+                        <td>40-60h</td>
+                        <td>$15/month/host</td>
+                        <td>Meeting creation, webhooks, duration tracking</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Voice Calling (Anam.ai/Bland.ai)</strong></td>
+                        <td><span class="badge badge-warning">High</span></td>
+                        <td>100-140h</td>
+                        <td>$1000-3000/month</td>
+                        <td>$0.10-0.50 per minute; complex dialog management</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LLM API (GPT-4/Claude)</strong></td>
+                        <td><span class="badge badge-success">Medium</span></td>
+                        <td>80-120h</td>
+                        <td>$500-1500/month</td>
+                        <td>Context management, prompt engineering</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transcription (Whisper/Deepgram)</strong></td>
+                        <td><span class="badge badge-success">Simple</span></td>
+                        <td>20-30h</td>
+                        <td>$200-400/month</td>
+                        <td>$0.0043/minute (Deepgram)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CRM (Freshsales/Zoho)</strong></td>
+                        <td><span class="badge badge-success">Medium</span></td>
+                        <td>60-80h</td>
+                        <td>$50-150/month</td>
+                        <td>Contact sync, multiple WhatsApp numbers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Payment API (Veem)</strong></td>
+                        <td><span class="badge badge-success">Medium</span></td>
+                        <td>40-60h</td>
+                        <td>Transaction fees</td>
+                        <td>Payment initiation, status tracking</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box" style="margin-top: 20px;">
+                <strong>Monthly Operational Costs (at scale):</strong> $2,500 - $6,700 for 1,000 clients + 500 experts
+            </div>
+        </section>
+
+        <!-- Critical Risks -->
+        <section style="background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <h2 style="color: var(--danger); margin-bottom: 20px;">⚠️ Critical Risks & Challenges</h2>
+
+            <div class="risk-item">
+                <h4>1. LinkedIn Automation - Legally Impossible</h4>
+                <p>LinkedIn's API does not provide functionality for automated messaging or profile scraping. Web scraping violates LinkedIn Terms of Service and can result in:</p>
+                <ul style="margin-left: 30px; margin-top: 10px;">
+                    <li>Permanent account bans</li>
+                    <li>Legal action from LinkedIn</li>
+                    <li>Reputation damage</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Recommendation:</strong> Remove LinkedIn automation or replace with manual process assisted by AI-drafted messages</p>
+            </div>
+
+            <div class="risk-item">
+                <h4>2. Legal Compliance (GDPR, TCPA, CAN-SPAM)</h4>
+                <p>Automated communications with personal data storage and outreach require:</p>
+                <ul style="margin-left: 30px; margin-top: 10px;">
+                    <li>GDPR compliance for EU contacts (consent, data retention, right to deletion)</li>
+                    <li>TCPA compliance for automated calls/SMS in USA</li>
+                    <li>CAN-SPAM compliance for email marketing</li>
+                    <li>WhatsApp Business Policy compliance (anti-spam)</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Recommendation:</strong> Legal consultation required; implement opt-in mechanisms and consent tracking</p>
+            </div>
+
+            <div class="risk-item">
+                <h4>3. Google Sheets as Database</h4>
+                <p>Using Google Sheets for production data has severe limitations:</p>
+                <ul style="margin-left: 30px; margin-top: 10px;">
+                    <li>API rate limits: 100 requests per 100 seconds per user</li>
+                    <li>Slow performance (200-500ms per operation)</li>
+                    <li>Does NOT scale beyond 1,000 rows</li>
+                    <li>No transactional integrity (concurrent writes can corrupt data)</li>
+                    <li>No proper indexing or query optimization</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Recommendation:</strong> Use PostgreSQL database instead (essential for production)</p>
+            </div>
+
+            <div class="risk-item">
+                <h4>4. Scope Creep Risk</h4>
+                <p>The specification is 60+ pages with extensive feature lists mixing "must-have" and "nice-to-have" features without clear prioritization.</p>
+                <ul style="margin-left: 30px; margin-top: 10px;">
+                    <li>Risk of continuous requirement changes</li>
+                    <li>Unclear definition of "done"</li>
+                    <li>Potential for project timeline to extend indefinitely</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Recommendation:</strong> Define clear MVP scope with locked requirements; any additions go through formal change request process</p>
+            </div>
+
+            <div class="risk-item">
+                <h4>5. Technical Complexity - State Synchronization</h4>
+                <p>Keeping state synchronized across multiple communication channels (email ↔ WhatsApp ↔ Voice ↔ LinkedIn) while handling:</p>
+                <ul style="margin-left: 30px; margin-top: 10px;">
+                    <li>24 timezones + DST transitions</li>
+                    <li>Race conditions (two people responding simultaneously)</li>
+                    <li>Message ordering guarantees</li>
+                    <li>Failure recovery and retry logic</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Recommendation:</strong> Start with email-only to validate core logic before adding multi-channel complexity</p>
+            </div>
+        </section>
+
+        <!-- Time & Cost Estimates -->
+        <section style="background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <h2 style="color: var(--primary); margin-bottom: 20px;">Development Time Estimates</h2>
+
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('full-estimate')">Full Implementation</button>
+                <button class="tab" onclick="switchTab('mvp-estimate')">MVP Approach</button>
+            </div>
+
+            <div id="full-estimate" class="tab-content active">
+                <h3>Full Implementation (As Specified)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Hours</th>
+                            <th>Cost @ $60/hr</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Backend Core & API</td>
+                            <td>120-160h</td>
+                            <td>$7,200 - $9,600</td>
+                            <td>FastAPI, auth, middleware, state machine</td>
+                        </tr>
+                        <tr>
+                            <td>Email Integration</td>
+                            <td>40-60h</td>
+                            <td>$2,400 - $3,600</td>
+                            <td>SendGrid, templates, tracking</td>
+                        </tr>
+                        <tr>
+                            <td>WhatsApp Business API</td>
+                            <td>80-120h</td>
+                            <td>$4,800 - $7,200</td>
+                            <td>Verification, webhooks, state management</td>
+                        </tr>
+                        <tr>
+                            <td>LinkedIn Integration</td>
+                            <td><span class="badge badge-danger">REMOVED</span></td>
+                            <td>-</td>
+                            <td>Not feasible - API limitations</td>
+                        </tr>
+                        <tr>
+                            <td>Calendar Integration</td>
+                            <td>60-80h</td>
+                            <td>$3,600 - $4,800</td>
+                            <td>Google + Office 365, timezone logic</td>
+                        </tr>
+                        <tr>
+                            <td>Zoom Integration</td>
+                            <td>40-60h</td>
+                            <td>$2,400 - $3,600</td>
+                            <td>Meeting creation, webhooks</td>
+                        </tr>
+                        <tr>
+                            <td>AI Voice Calling</td>
+                            <td>100-140h</td>
+                            <td>$6,000 - $8,400</td>
+                            <td>Anam.ai integration, dialog flows</td>
+                        </tr>
+                        <tr>
+                            <td>CRM Integration</td>
+                            <td>60-80h</td>
+                            <td>$3,600 - $4,800</td>
+                            <td>Freshsales/Zoho sync</td>
+                        </tr>
+                        <tr>
+                            <td>LLM Processing & AI</td>
+                            <td>80-120h</td>
+                            <td>$4,800 - $7,200</td>
+                            <td>Prompt engineering, context management</td>
+                        </tr>
+                        <tr>
+                            <td>Communication System</td>
+                            <td>120-160h</td>
+                            <td>$7,200 - $9,600</td>
+                            <td>Multi-channel state machine</td>
+                        </tr>
+                        <tr>
+                            <td>Transcription & AI Co-Pilot</td>
+                            <td>80-100h</td>
+                            <td>$4,800 - $6,000</td>
+                            <td>Real-time transcription, prompts</td>
+                        </tr>
+                        <tr>
+                            <td>Payment System</td>
+                            <td>60-80h</td>
+                            <td>$3,600 - $4,800</td>
+                            <td>Veem API, calculations, logging</td>
+                        </tr>
+                        <tr>
+                            <td>Database Design</td>
+                            <td>40-60h</td>
+                            <td>$2,400 - $3,600</td>
+                            <td>PostgreSQL schema, migrations</td>
+                        </tr>
+                        <tr>
+                            <td>Frontend (Next.js)</td>
+                            <td>200-280h</td>
+                            <td>$12,000 - $16,800</td>
+                            <td>Dashboards, forms, real-time updates</td>
+                        </tr>
+                        <tr>
+                            <td>Testing & QA</td>
+                            <td>120-160h</td>
+                            <td>$7,200 - $9,600</td>
+                            <td>Unit, integration, E2E tests</td>
+                        </tr>
+                        <tr>
+                            <td>DevOps & Deployment</td>
+                            <td>60-80h</td>
+                            <td>$3,600 - $4,800</td>
+                            <td>CI/CD, monitoring, alerts</td>
+                        </tr>
+                        <tr style="background: var(--gray-100); font-weight: bold;">
+                            <td>TOTAL</td>
+                            <td>1,260-1,740h</td>
+                            <td>$75,600 - $104,400</td>
+                            <td>6-8 months for 1 developer</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="mvp-estimate" class="tab-content">
+                <h3>MVP Approach (Recommended)</h3>
+                <p style="margin-bottom: 20px;">Focused implementation delivering core value in 2-3 months</p>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h3 style="color: var(--success);">✓ Included in MVP</h3>
+                        <ul>
+                            <li>Email-only communication (no WhatsApp/Voice)</li>
+                            <li>Basic project intake form</li>
+                            <li>Expert matching with AI scoring</li>
+                            <li>Semi-automated expert submission (manual approval)</li>
+                            <li>Calendar booking system (Calendly-style)</li>
+                            <li>Zoom meeting creation</li>
+                            <li>Post-call transcription & summary</li>
+                            <li>Basic client & expert dashboards</li>
+                            <li>PostgreSQL database (not Google Sheets)</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card excluded">
+                        <h3 style="color: var(--danger);">✗ Not in MVP</h3>
+                        <ul>
+                            <li>WhatsApp integration</li>
+                            <li>LinkedIn automation</li>
+                            <li>AI voice calling</li>
+                            <li>Real-time AI Co-Pilot during calls</li>
+                            <li>Automated payments (manual process)</li>
+                            <li>Complex follow-up sequences</li>
+                            <li>Multi-brand support</li>
+                            <li>Advanced analytics</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <table style="margin-top: 30px;">
+                    <thead>
+                        <tr>
+                            <th>MVP Module</th>
+                            <th>Hours</th>
+                            <th>Cost @ $60/hr</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Backend API (FastAPI)</td>
+                            <td>60-80h</td>
+                            <td>$3,600 - $4,800</td>
+                        </tr>
+                        <tr>
+                            <td>Database Design (PostgreSQL)</td>
+                            <td>20-30h</td>
+                            <td>$1,200 - $1,800</td>
+                        </tr>
+                        <tr>
+                            <td>Email Integration</td>
+                            <td>30-40h</td>
+                            <td>$1,800 - $2,400</td>
+                        </tr>
+                        <tr>
+                            <td>LLM Integration (GPT-4)</td>
+                            <td>40-60h</td>
+                            <td>$2,400 - $3,600</td>
+                        </tr>
+                        <tr>
+                            <td>Project Intake Flow</td>
+                            <td>30-40h</td>
+                            <td>$1,800 - $2,400</td>
+                        </tr>
+                        <tr>
+                            <td>Expert Matching Algorithm</td>
+                            <td>40-50h</td>
+                            <td>$2,400 - $3,000</td>
+                        </tr>
+                        <tr>
+                            <td>Calendar Booking System</td>
+                            <td>40-60h</td>
+                            <td>$2,400 - $3,600</td>
+                        </tr>
+                        <tr>
+                            <td>Zoom Integration</td>
+                            <td>20-30h</td>
+                            <td>$1,200 - $1,800</td>
+                        </tr>
+                        <tr>
+                            <td>Transcription (Whisper)</td>
+                            <td>20-30h</td>
+                            <td>$1,200 - $1,800</td>
+                        </tr>
+                        <tr>
+                            <td>Frontend Dashboard (Next.js)</td>
+                            <td>80-120h</td>
+                            <td>$4,800 - $7,200</td>
+                        </tr>
+                        <tr>
+                            <td>Testing & Bug Fixes</td>
+                            <td>40-60h</td>
+                            <td>$2,400 - $3,600</td>
+                        </tr>
+                        <tr style="background: var(--gray-100); font-weight: bold;">
+                            <td>MVP TOTAL</td>
+                            <td>420-600h</td>
+                            <td>$25,200 - $36,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box" style="margin-top: 20px;">
+                    <strong>MVP Timeline:</strong> 2-3 months with weekly demos and iterative feedback
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Calculator -->
+        <div class="calculator">
+            <h3>🧮 Interactive Cost Calculator</h3>
+            <p style="margin-bottom: 20px;">Select the features you want to include:</p>
+
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="backend" checked onchange="calculateTotal()">
+                    <label for="backend">Backend Core & API</label>
+                    <span class="hours">140h</span>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="email" checked onchange="calculateTotal()">
+                    <label for="email">Email Integration</label>
+                    <span class="hours">50h</span>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="whatsapp" onchange="calculateTotal()">
+                    <label for="whatsapp">WhatsApp Business API</label>
+                    <span class="hours">100h</span>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="calendar" checked onchange="calculateTotal()">
+                    <label for="calendar">Calendar Integration (Google + Office 365)</label>
+                    <span class="hours">70h</span>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="zoom" checked onchange="calculateTotal()">
+                    <label for="zoom">Zoom Integration</label>
+                    <span class="hours">50h</span>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="voice" onchange="calculateTotal()">
+                    <label for="voice">AI Voice Calling</label>
+                    <span class="hours">120h</span>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="crm" onchange="calculateTotal()">
+                    <label for="crm">CRM Integration</label>
+                    <span class="hours">70h</span>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="llm" checked onchange="calculateTotal()">
+                    <label for="llm">LLM Processing & AI</label>
+                    <span class="hours">100h</span>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="comms" checked onchange="calculateTotal()">
+                    <label for="comms">Communication State Machine</label>
+                    <span class="hours">140h</span>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="transcription" checked onchange="calculateTotal()">
+                    <label for="transcription">Transcription & Summaries</label>
+                    <span class="hours">90h</span>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="copilot" onchange="calculateTotal()">
+                    <label for="copilot">Real-time AI Co-Pilot</label>
+                    <span class="hours">90h</span>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="payments" onchange="calculateTotal()">
+                    <label for="payments">Payment Automation</label>
+                    <span class="hours">70h</span>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="database" checked onchange="calculateTotal()">
+                    <label for="database">Database Design (PostgreSQL)</label>
+                    <span class="hours">50h</span>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="frontend" checked onchange="calculateTotal()">
+                    <label for="frontend">Frontend Dashboard (Next.js)</label>
+                    <span class="hours">240h</span>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="testing" checked onchange="calculateTotal()">
+                    <label for="testing">Testing & QA</label>
+                    <span class="hours">140h</span>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="devops" checked onchange="calculateTotal()">
+                    <label for="devops">DevOps & Deployment</label>
+                    <span class="hours">70h</span>
+                </div>
+            </div>
+
+            <div style="margin: 30px 0;">
+                <label for="hourly-rate">Hourly Rate: $</label>
+                <input type="number" id="hourly-rate" value="60" min="30" max="150" style="padding: 8px; font-size: 1rem; border: 1px solid var(--gray-300); border-radius: 4px; width: 100px;" onchange="calculateTotal()">
+            </div>
+
+            <div class="total-estimate">
+                <h4>Estimated Total</h4>
+                <div class="amount" id="total-hours">1,610 hours</div>
+                <div style="font-size: 1.2rem; margin-top: 10px;" id="total-cost">$96,600</div>
+                <div style="font-size: 1rem; margin-top: 10px; opacity: 0.9;" id="timeline">Approximately 8 months</div>
+            </div>
+        </div>
+
+        <!-- Development Timeline -->
+        <section style="background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <h2 style="color: var(--primary); margin-bottom: 20px;">Development Timeline (MVP)</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>Month 1: Foundation</h4>
+                    <p><strong>Deliverables:</strong></p>
+                    <ul style="margin-left: 30px;">
+                        <li>Backend API structure (FastAPI)</li>
+                        <li>PostgreSQL database schema</li>
+                        <li>Email integration (SendGrid)</li>
+                        <li>Basic project intake form</li>
+                        <li>LLM integration for requirement extraction</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Month 2: Core Features</h4>
+                    <p><strong>Deliverables:</strong></p>
+                    <ul style="margin-left: 30px;">
+                        <li>Expert matching algorithm</li>
+                        <li>Calendar booking system</li>
+                        <li>Zoom integration</li>
+                        <li>Expert and client dashboards (basic)</li>
+                        <li>Automated email sequences</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Month 3: Polish & Launch</h4>
+                    <p><strong>Deliverables:</strong></p>
+                    <ul style="margin-left: 30px;">
+                        <li>Post-call transcription</li>
+                        <li>AI-generated summaries</li>
+                        <li>Dashboard enhancements</li>
+                        <li>End-to-end testing</li>
+                        <li>Production deployment</li>
+                        <li>User documentation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recommendations -->
+        <section style="background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <h2 style="color: var(--primary); margin-bottom: 20px;">💡 Recommendations</h2>
+
+            <h3 style="margin-top: 30px; margin-bottom: 15px; color: var(--success);">✅ RECOMMENDED: MVP Approach</h3>
+
+            <div style="background: var(--gray-50); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                <h4>Why MVP First?</h4>
+                <ul style="margin-left: 30px; margin-top: 10px;">
+                    <li><strong>Faster time to value:</strong> 2-3 months vs 6-8 months</li>
+                    <li><strong>Lower risk:</strong> Validate core assumptions before full investment</li>
+                    <li><strong>Iterative improvement:</strong> Learn from real users and adapt</li>
+                    <li><strong>Cost efficiency:</strong> $25-36k vs $75-104k upfront</li>
+                    <li><strong>Clearer scope:</strong> Well-defined deliverables reduce scope creep</li>
+                </ul>
+            </div>
+
+            <h3 style="margin-top: 30px; margin-bottom: 15px;">Proposed Approach:</h3>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <h3>Phase 1: MVP Development ($28,000 - $35,000)</h3>
+                    <span class="collapsible-icon">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <p><strong>Duration:</strong> 2-3 months</p>
+                    <p><strong>Deliverables:</strong></p>
+                    <ul style="margin-left: 30px;">
+                        <li>Email-based communication system</li>
+                        <li>Project intake with AI requirement extraction</li>
+                        <li>Expert matching and submission workflow</li>
+                        <li>Calendar booking system</li>
+                        <li>Zoom integration</li>
+                        <li>Post-call transcription and AI summaries</li>
+                        <li>Basic dashboards for clients and experts</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>Payment Structure:</strong></p>
+                    <ul style="margin-left: 30px;">
+                        <li>30% upfront ($8,400 - $10,500)</li>
+                        <li>40% at mid-point demo ($11,200 - $14,000)</li>
+                        <li>30% at final delivery ($8,400 - $10,500)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <h3>Phase 2: WhatsApp Integration ($12,000 - $18,000)</h3>
+                    <span class="collapsible-icon">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <p><strong>Duration:</strong> 1-1.5 months</p>
+                    <p><strong>Prerequisites:</strong></p>
+                    <ul style="margin-left: 30px;">
+                        <li>Client completes WhatsApp Business verification (2-4 weeks)</li>
+                        <li>MVP in production and validated</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>Deliverables:</strong></p>
+                    <ul style="margin-left: 30px;">
+                        <li>WhatsApp Business API integration</li>
+                        <li>Multi-channel state synchronization (Email ↔ WhatsApp)</li>
+                        <li>WhatsApp templates and conversation flows</li>
+                        <li>Quiet hours enforcement</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><span class="badge badge-warning">NOTE</span> Client must cover WhatsApp API costs (~$500-1000/month)</p>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <h3>Phase 3: AI Voice Calling ($15,000 - $22,000)</h3>
+                    <span class="collapsible-icon">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <p><strong>Duration:</strong> 1.5-2 months</p>
+                    <p><strong>Deliverables:</strong></p>
+                    <ul style="margin-left: 30px;">
+                        <li>AI voice calling integration (Anam.ai or Bland.ai)</li>
+                        <li>Dialog flow design for expert outreach</li>
+                        <li>Screening question collection via voice</li>
+                        <li>Call recording and transcription</li>
+                        <li>Multi-channel synchronization (Email ↔ WhatsApp ↔ Voice)</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><span class="badge badge-warning">NOTE</span> Client must cover AI calling costs (~$1,000-3,000/month at scale)</p>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <h3>Phase 4: Advanced Features ($20,000 - $30,000)</h3>
+                    <span class="collapsible-icon">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <p><strong>Duration:</strong> 2-3 months</p>
+                    <p><strong>Deliverables:</strong></p>
+                    <ul style="margin-left: 30px;">
+                        <li>Real-time AI Co-Pilot during calls</li>
+                        <li>Automated payment processing</li>
+                        <li>Advanced analytics and insights</li>
+                        <li>Multi-brand support</li>
+                        <li>Knowledge graph and semantic search</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 50px; margin-bottom: 20px; color: var(--warning);">💰 Budget-Constrained? Let's Talk</h3>
+
+            <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 30px; border-radius: 12px; border-left: 4px solid var(--warning);">
+                <h4 style="margin-bottom: 15px; color: var(--gray-800);">Ultra-Lean MVP Option ($12,000 - $18,000)</h4>
+                <p style="margin-bottom: 15px;">If your budget is more constrained, we can build an even more focused version that proves the core concept:</p>
+
+                <div style="background: white; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <p style="margin-bottom: 10px;"><strong>What's included in Ultra-Lean MVP:</strong></p>
+                    <ul style="margin-left: 30px;">
+                        <li>Simple project intake form (web form, not AI-powered email parsing)</li>
+                        <li>Manual expert search and matching (you select from database)</li>
+                        <li>Automated email communication for expert outreach</li>
+                        <li>Basic calendar booking (Calendly-style, manual coordination)</li>
+                        <li>Simple dashboard to track projects and expert responses</li>
+                        <li>Google Sheets as database (upgrade to PostgreSQL later)</li>
+                    </ul>
+                </div>
+
+                <div style="background: white; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <p style="margin-bottom: 10px;"><strong>What's NOT included (can add later):</strong></p>
+                    <ul style="margin-left: 30px;">
+                        <li>AI-powered requirement extraction</li>
+                        <li>Automatic expert matching algorithm</li>
+                        <li>Zoom integration (use manual Zoom links)</li>
+                        <li>Transcription and AI summaries</li>
+                        <li>Advanced dashboards</li>
+                    </ul>
+                </div>
+
+                <p style="margin-top: 20px; font-weight: 600; color: var(--gray-800);">
+                    💡 <strong>My Recommendation:</strong> Before committing to any scope, let's have a conversation about:
+                </p>
+                <ul style="margin-left: 30px; margin-top: 10px;">
+                    <li>Your actual budget constraints</li>
+                    <li>Which features are absolutely critical vs nice-to-have</li>
+                    <li>What timeline you're working with</li>
+                    <li>What success looks like for Phase 1</li>
+                </ul>
+
+                <p style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.7); border-radius: 6px; font-style: italic;">
+                    "I'd rather build something focused that works perfectly within your budget than overpromise and underdeliver. Let's discuss your priorities and I'll tell you honestly what's achievable."
+                </p>
+
+                <div style="text-align: center; margin-top: 25px;">
+                    <a href="https://calendly.com/leo-systemhustle/15-min-discovery-call" target="_blank" class="btn" style="background: var(--warning); color: var(--gray-900);">Let's Discuss Your Budget & Priorities</a>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px; margin-bottom: 15px; color: var(--danger);">⛔ Do NOT Proceed If:</h3>
+            <ul style="margin-left: 30px;">
+                <li>Client insists on full implementation with fixed price upfront (too risky)</li>
+                <li>Client demands LinkedIn automation (legal violation)</li>
+                <li>Client is unwilling to commit to weekly check-ins and feedback</li>
+                <li>Client refuses to cover operational API costs</li>
+                <li>No clear decision-maker or approval process</li>
+                <li>Budget expectations are unrealistic (e.g., full platform for $5k)</li>
+            </ul>
+        </section>
+
+        <!-- Questions for Client -->
+        <section style="background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <h2 style="color: var(--primary); margin-bottom: 20px;">❓ Questions Before Proceeding</h2>
+
+            <p style="margin-bottom: 20px;">Before providing a formal proposal, I need clarification on the following:</p>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <h3>1. Budget & Timeline</h3>
+                    <span class="collapsible-icon">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <ul style="margin-left: 30px;">
+                        <li>What is your total budget for this project?</li>
+                        <li>What is your ideal launch timeline?</li>
+                        <li>Are you open to a phased MVP approach or require full implementation immediately?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <h3>2. Scale & Volume</h3>
+                    <span class="collapsible-icon">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <ul style="margin-left: 30px;">
+                        <li>How many clients do you expect to onboard in the first 6 months?</li>
+                        <li>How many experts are currently in your database?</li>
+                        <li>What is the expected volume of monthly calls/projects?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <h3>3. Operational Costs</h3>
+                    <span class="collapsible-icon">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <ul style="margin-left: 30px;">
+                        <li>Are you prepared to cover monthly API costs ($2,500-6,700 at scale)?</li>
+                        <li>Who will manage WhatsApp Business verification (requires 2-4 weeks)?</li>
+                        <li>Do you have existing accounts for: SendGrid, Zoom, CRM, etc.?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <h3>4. Legal & Compliance</h3>
+                    <span class="collapsible-icon">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <ul style="margin-left: 30px;">
+                        <li>Do you have legal counsel for GDPR, TCPA, and data privacy compliance?</li>
+                        <li>Are you aware that LinkedIn automation is not feasible and violates their TOS?</li>
+                        <li>Do you have consent mechanisms in place for automated communications?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <h3>5. Data & Infrastructure</h3>
+                    <span class="collapsible-icon">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <ul style="margin-left: 30px;">
+                        <li>Are you open to migrating from Google Sheets to PostgreSQL? (Essential for production)</li>
+                        <li>What is the current format/structure of your expert database?</li>
+                        <li>Do you have existing hosting infrastructure or need recommendations?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <h3>6. Process & Collaboration</h3>
+                    <span class="collapsible-icon">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <ul style="margin-left: 30px;">
+                        <li>Can you commit to weekly demo meetings for feedback?</li>
+                        <li>Who is the primary decision-maker for feature prioritization?</li>
+                        <li>Are you open to iterative development with scope adjustments?</li>
+                        <li>Do you have internal technical resources or will this be fully outsourced?</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <div class="cta">
+            <h2>Ready to Discuss Your Project?</h2>
+            <p style="margin: 20px 0; font-size: 1.1rem; color: var(--gray-600);">
+                I'm available to discuss the technical details, answer questions, and develop a customized proposal based on your specific needs and budget.
+            </p>
+            <a href="https://calendly.com/leo-systemhustle/15-min-discovery-call" target="_blank" class="btn">Schedule a 15-Min Discovery Call</a>
+            <p style="margin-top: 20px; color: var(--gray-600);">
+                Or email me at <a href="mailto:leo@systemhustle.com" style="color: var(--primary); text-decoration: none; font-weight: 600;">leo@systemhustle.com</a>
+            </p>
+        </div>
+    </div>
+
+    <footer style="background: var(--gray-800); color: white; text-align: center; padding: 40px 20px; margin-top: 60px;">
+        <p style="font-size: 1.1rem; font-weight: 600;">Technical Proposal prepared by Leonid Shvorob</p>
+        <p style="margin-top: 10px;">
+            <a href="mailto:leo@systemhustle.com" style="color: white; text-decoration: none; opacity: 0.9;">leo@systemhustle.com</a>
+        </p>
+        <p style="margin-top: 10px; opacity: 0.7;">This analysis is based on the specifications provided in your two documents: "AI Brain for Client Communications" and "Project Intake, Expert Submission & Auto-booking"</p>
+    </footer>
+
+    <script>
+        // Tab switching
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Deactivate all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+
+            // Activate clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Collapsible sections
+        function toggleCollapsible(header) {
+            const collapsible = header.parentElement;
+            collapsible.classList.toggle('active');
+        }
+
+        // Cost calculator
+        const modules = {
+            backend: 140,
+            email: 50,
+            whatsapp: 100,
+            calendar: 70,
+            zoom: 50,
+            voice: 120,
+            crm: 70,
+            llm: 100,
+            comms: 140,
+            transcription: 90,
+            copilot: 90,
+            payments: 70,
+            database: 50,
+            frontend: 240,
+            testing: 140,
+            devops: 70
+        };
+
+        function calculateTotal() {
+            let totalHours = 0;
+            const hourlyRate = parseInt(document.getElementById('hourly-rate').value) || 60;
+
+            Object.keys(modules).forEach(moduleId => {
+                const checkbox = document.getElementById(moduleId);
+                if (checkbox && checkbox.checked) {
+                    totalHours += modules[moduleId];
+                }
+            });
+
+            const totalCost = totalHours * hourlyRate;
+            const months = Math.round(totalHours / 200);
+
+            document.getElementById('total-hours').textContent = totalHours.toLocaleString() + ' hours';
+            document.getElementById('total-cost').textContent = '$' + totalCost.toLocaleString();
+            document.getElementById('timeline').textContent = 'Approximately ' + months + ' months';
+        }
+
+        // Initialize calculator on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            calculateTotal();
+        });
+    </script>
+</body>
+</html>
